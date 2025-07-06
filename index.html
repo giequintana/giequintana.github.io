@@ -1059,7 +1059,7 @@ body {
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Gerald Quintana </title>
+    <title>Gerald Quintana </title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/geraldquintana.styles.css" asp-append-version="true" />
@@ -1131,20 +1131,6 @@ body {
                 </div>
 
                 <div class="col-lg-6">
-
-                  @*   <div class="col-lg-12 hero-content">
-                        <div class="hero-avatar text-center d-none d-lg-block">
-                            <img src="~/images/dp1.jpg" alt="Gerald Quintana" class="img-fluid avatar-img">
-                        </div>
-                        <!-- Mobile View -->
-                        <div class="hero-avatar text-center d-lg-none mt-4">
-                            <img src="~/images/dp1.jpg" alt="Gerald Quintana" class="img-fluid avatar-img-sm">
-                        </div>
-                    </div> *@
-
-                    <div class="hero-avatar text-center mb-4">
-                        <img src="~/images/dp1.jpg" alt="Gerald Quintana" class="avatar-img">
-                    </div>
 
                     <div class="hero-image text-center d-none d-lg-block">
                         <div class="code-preview p-4 rounded" style="background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1);">
@@ -2023,4 +2009,383 @@ body {
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+ <!-- jQuery CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Bootstrap 5.3 Bundle CDN (includes Popper) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+ 
+    <script>
+        $(document).ready(function () {
+            // Smooth scrolling for navigation links
+            $('a[href^="#"]').on('click', function (e) {
+                e.preventDefault();
+                var target = this.hash;
+                var $target = $(target);
+
+                if ($target.length) {
+                    $('html, body').animate({
+                        'scrollTop': $target.offset().top - 70
+                    }, 800, 'swing');
+                }
+            });
+
+            // Active navigation link
+            $(window).on('scroll', function () {
+                var scrollPos = $(window).scrollTop();
+                $('.navbar-nav .nav-link').each(function () {
+                    var currLink = $(this);
+                    var refElement = $(currLink.attr("href"));
+
+                    if (refElement.position().top - 100 <= scrollPos &&
+                        refElement.position().top + refElement.height() > scrollPos) {
+                        $('.navbar-nav .nav-link').removeClass("active");
+                        currLink.addClass("active");
+                    }
+                });
+            });
+
+            // Navbar background on scroll
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > 50) {
+                    $('.navbar').addClass('scrolled');
+                } else {
+                    $('.navbar').removeClass('scrolled');
+                }
+            });
+
+            // Fade in animation on scroll
+            function fadeInOnScroll() {
+                $('.fade-in').each(function () {
+                    var elementTop = $(this).offset().top;
+                    var elementBottom = elementTop + $(this).outerHeight();
+                    var viewportTop = $(window).scrollTop();
+                    var viewportBottom = viewportTop + $(window).height();
+
+                    if (elementBottom > viewportTop && elementTop < viewportBottom) {
+                        $(this).addClass('visible');
+                    }
+                });
+            }
+
+            // Animate progress bars when visible
+            function animateProgressBars() {
+                $('.progress-bar').each(function () {
+                    var progressBar = $(this);
+                    var progressValue = progressBar.attr('style').match(/width:\s*(\d+)%/);
+
+                    if (progressValue) {
+                        var elementTop = progressBar.offset().top;
+                        var elementBottom = elementTop + progressBar.outerHeight();
+                        var viewportTop = $(window).scrollTop();
+                        var viewportBottom = viewportTop + $(window).height();
+
+                        if (elementBottom > viewportTop && elementTop < viewportBottom) {
+                            if (!progressBar.hasClass('animated')) {
+                                progressBar.addClass('animated');
+                                progressBar.css('width', '0%');
+                                progressBar.animate({
+                                    width: progressValue[1] + '%'
+                                }, 1500);
+                            }
+                        }
+                    }
+                });
+            }
+
+            function typeWriter(element, text, speed) {
+                var i = 0;
+                var txt = text;
+                element.html('');
+                var buffer = ''; // Store the typed characters here
+
+                function type() {
+                    if (i < txt.length) {
+                        buffer += txt.charAt(i);
+                        element.html(buffer); // Set directly, don't read existing content
+                        i++;
+                        setTimeout(type, speed);
+                    }
+                }
+
+                type();
+            }
+
+            setTimeout(function () {
+                typeWriter($('.hero h1'), "Hi, I'm Gerald Quintana", 100);
+            }, 1000);
+
+            // Contact form submission
+            $('#contactForm').on('submit', function (e) {
+                e.preventDefault();
+
+                var formData = {
+                    name: $('#name').val(),
+                    email: $('#email').val(),
+                    subject: $('#subject').val(),
+                    message: $('#message').val()
+                };
+
+                // Show loading state
+                var $submitBtn = $(this).find('button[type="submit"]');
+                var originalText = $submitBtn.html();
+                $submitBtn.html('<i class="fas fa-spinner fa-spin me-2"></i>Sending...');
+                $submitBtn.prop('disabled', true);
+
+                // Simulate form submission
+                setTimeout(function () {
+                    $submitBtn.html('<i class="fas fa-check me-2"></i>Message Sent!');
+                    $submitBtn.removeClass('btn-primary').addClass('btn-success');
+
+                    // Reset form
+                    $('#contactForm')[0].reset();
+
+                    // Reset button after 3 seconds
+                    setTimeout(function () {
+                        $submitBtn.html(originalText);
+                        $submitBtn.removeClass('btn-success').addClass('btn-primary');
+                        $submitBtn.prop('disabled', false);
+                    }, 3000);
+                }, 2000);
+            });
+
+            // Particle effect for hero section
+            function createParticle() {
+                var particle = $('<div class="particle"></div>');
+                var size = Math.random() * 3 + 1;
+                var x = Math.random() * window.innerWidth;
+                var duration = Math.random() * 3 + 2;
+
+                particle.css({
+                    position: 'absolute',
+                    width: size + 'px',
+                    height: size + 'px',
+                    backgroundColor: 'rgba(99, 102, 241, 0.5)',
+                    borderRadius: '50%',
+                    left: x + 'px',
+                    top: '100vh',
+                    pointerEvents: 'none',
+                    zIndex: 1
+                });
+
+                $('.hero').append(particle);
+
+                particle.animate({
+                    top: '-10px',
+                    opacity: 0
+                }, duration * 1000, function () {
+                    particle.remove();
+                });
+            }
+
+            // Mobile-specific optimizations
+            if (window.innerWidth <= 768) {
+                // Disable particle effects on mobile for better performance
+                clearInterval(particleInterval);
+
+                // Optimize animations for mobile
+                $('.fade-in').removeClass('fade-in');
+                $('.project-card').css({
+                    'opacity': '1',
+                    'transform': 'translateY(0)'
+                });
+
+                // Improve touch interactions
+                $('.card, .btn, .nav-link').on('touchstart', function () {
+                    $(this).addClass('touched');
+                }).on('touchend', function () {
+                    var $this = $(this);
+                    setTimeout(function () {
+                        $this.removeClass('touched');
+                    }, 150);
+                });
+
+                // Optimize navbar for mobile
+                $('.navbar-collapse').on('show.bs.collapse', function () {
+                    $('body').addClass('navbar-open');
+                }).on('hide.bs.collapse', function () {
+                    $('body').removeClass('navbar-open');
+                });
+
+                // Close mobile menu when clicking nav links
+                $('.navbar-nav .nav-link').on('click', function () {
+                    $('.navbar-collapse').collapse('hide');
+                });
+
+                // Adjust scroll behavior for mobile
+                $('a[href^="#"]').off('click').on('click', function (e) {
+                    e.preventDefault();
+                    var target = this.hash;
+                    var $target = $(target);
+
+                    if ($target.length) {
+                        $('html, body').animate({
+                            'scrollTop': $target.offset().top - 60
+                        }, 500, 'swing');
+                    }
+                });
+            }
+
+            // Create particles periodically (desktop only)
+            var particleInterval;
+            if (window.innerWidth > 768) {
+                particleInterval = setInterval(createParticle, 500);
+            }
+
+            // Handle window resize
+            $(window).on('resize', function () {
+                if (window.innerWidth <= 768) {
+                    // Mobile optimizations
+                    clearInterval(particleInterval);
+                    $('.floating-icons').hide();
+                } else {
+                    // Desktop optimizations
+                    if (!particleInterval) {
+                        particleInterval = setInterval(createParticle, 500);
+                    }
+                    $('.floating-icons').show();
+                }
+            });
+
+            // Optimize scroll performance on mobile
+            var scrollTimeout;
+            $(window).on('scroll', function () {
+                if (scrollTimeout) {
+                    clearTimeout(scrollTimeout);
+                }
+
+                scrollTimeout = setTimeout(function () {
+                    fadeInOnScroll();
+                    animateProgressBars();
+                }, window.innerWidth <= 768 ? 100 : 50);
+            });
+
+            // Touch-friendly button interactions
+            $('.btn').on('touchstart', function () {
+                $(this).addClass('btn-pressed');
+            }).on('touchend touchcancel', function () {
+                var $this = $(this);
+                setTimeout(function () {
+                    $this.removeClass('btn-pressed');
+                }, 150);
+            });
+
+            // Improve form experience on mobile
+            if (window.innerWidth <= 768) {
+                $('.form-control').on('focus', function () {
+                    $('html, body').animate({
+                        scrollTop: $(this).offset().top - 100
+                    }, 300);
+                });
+            }
+
+            // Optimize typing effect for mobile
+            if (window.innerWidth <= 768) {
+                setTimeout(function () {
+                    $('.hero h1').html("Hi, I'm <span class='highlight'>Gerald Quintana</span>");
+                }, 500);
+            } else {
+                setTimeout(function () {
+                    typeWriter($('.hero h1'), "Hi, I'm Gerald Quintana", 100);
+                }, 1000);
+            }
+
+            // Scroll event listeners
+            $(window).on('scroll', function () {
+                fadeInOnScroll();
+                animateProgressBars();
+            });
+
+            // Initial load
+            fadeInOnScroll();
+            animateProgressBars();
+
+            // Smooth reveal of sections
+            $('.section').each(function (index) {
+                $(this).css('opacity', '0');
+                $(this).delay(index * 200).animate({
+                    opacity: 1
+                }, 1000);
+            });
+
+            // Interactive hover effects
+            $('.card').hover(
+                function () {
+                    $(this).find('.skill-icon').addClass('animate__animated animate__pulse');
+                },
+                function () {
+                    $(this).find('.skill-icon').removeClass('animate__animated animate__pulse');
+                }
+            );
+
+            // Dynamic background gradient
+            var colors = ['#6366f1', '#8b5cf6', '#06b6d4', '#10b981'];
+            var currentColorIndex = 0;
+
+            setInterval(function () {
+                currentColorIndex = (currentColorIndex + 1) % colors.length;
+                var nextColor = colors[currentColorIndex];
+                $(':root').css('--primary-color', nextColor);
+            }, 5000);
+
+            // Project card animations
+            $('.project-card').each(function (index) {
+                $(this).delay(index * 200).animate({
+                    opacity: 1,
+                    transform: 'translateY(0)'
+                }, 800);
+            });
+
+            // Skill bar animations with intersection observer
+            if ('IntersectionObserver' in window) {
+                var skillObserver = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            var progressBar = $(entry.target).find('.progress-bar');
+                            progressBar.each(function () {
+                                var width = $(this).attr('style').match(/width:\s*(\d+)%/);
+                                if (width && !$(this).hasClass('animated')) {
+                                    $(this).addClass('animated');
+                                    $(this).css('width', '0%');
+                                    $(this).animate({
+                                        width: width[1] + '%'
+                                    }, 2000);
+                                }
+                            });
+                        }
+                    });
+                });
+
+                $('.card').each(function () {
+                    skillObserver.observe(this);
+                });
+            }
+
+            // Add ripple effect to buttons
+            $('.btn').on('click', function (e) {
+                var $button = $(this);
+                var $ripple = $('<span class="ripple"></span>');
+
+                $button.append($ripple);
+
+                var btnOffset = $button.offset();
+                var xPos = e.pageX - btnOffset.left;
+                var yPos = e.pageY - btnOffset.top;
+
+                $ripple.css({
+                    top: yPos + 'px',
+                    left: xPos + 'px'
+                }).addClass('animate');
+
+                setTimeout(function () {
+                    $ripple.remove();
+                }, 500);
+            });
+        });
+    </script>
+
 </html>
