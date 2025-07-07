@@ -1531,7 +1531,7 @@ body {
             <div class="row">
                 <div class="col-lg-8 mx-auto fade-in">
                     <div class="card">
-                        <form method="post" asp-page="/ContactFormHandler">
+                        <form id="contact-form">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
@@ -2381,5 +2381,28 @@ body {
             });
         });
     </script>
+
+    <!-- EmailJS SDK -->
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+
+<script>
+  (function(){
+    emailjs.init('pNWqAvUEuMkqUgV7s'); // Replace with your EmailJS public key
+  })();
+
+  document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    emailjs.sendForm('service_9ou0cz6', 'template_9311l9j', this)
+      .then(function() {
+        document.getElementById('form-result').innerHTML =
+          '<div class="alert alert-success">Message sent successfully!</div>';
+        document.getElementById('contact-form').reset();
+      }, function(error) {
+        document.getElementById('form-result').innerHTML =
+          '<div class="alert alert-danger">Failed to send message. Please try again later.</div>';
+      });
+  });
+</script>
 
 </html>
