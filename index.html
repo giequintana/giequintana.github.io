@@ -1561,6 +1561,8 @@ body {
                             </div>
                         </form>
 
+                        <div id="form-result"></div>
+
                     </div>
                 </div>
             </div>
@@ -2396,7 +2398,7 @@ body {
   document.getElementById('contact-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    emailjs.sendForm('service_9ou0cz6', 'template_9311l9j', this)
+    emailjs.sendForm('service_9ou0cz6', 'template_92qn51t', this)
       .then(function() {
         document.getElementById('form-result').innerHTML =
           '<div class="alert alert-success">Message sent successfully!</div>';
