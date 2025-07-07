@@ -2383,13 +2383,16 @@ body {
     </script>
 
     <!-- EmailJS SDK -->
-<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-
-<script>
-  (function(){
-    emailjs.init('pNWqAvUEuMkqUgV7s'); // Replace with your EmailJS public key
-  })();
-
+ <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "pNWqAvUEuMkqUgV7s",
+      });
+   })();
+ 
   document.getElementById('contact-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
